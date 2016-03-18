@@ -20,6 +20,36 @@ handlers.SavePlayerStats = function (args)
 	});
 }
 
+handlers.SavePlayerWinStats = function (args)
+{
+	var result = server.GetUserStatistics({PlayFabId: currentPlayerId}).UserStatistics;
+	
+	result.wins += 1;
+	result.xp = args.playerXp;
+	result.rank = args.playerRank;
+	result.bp += args.playerBp;
+	
+	server.UpdateUserStatistics({
+		PlayFabId: currentPlayerId,
+		UserStatistics: result
+	});
+}
+
+handlers.SavePlayerLoseStats = function (args)
+{
+	var result = server.GetUserStatistics({PlayFabId: currentPlayerId}).UserStatistics;
+	
+	result.losses += 1;
+	result.xp = args.playerXp;
+	result.rank = args.playerRank;
+	result.bp += args.playerBp;
+	
+	server.UpdateUserStatistics({
+		PlayFabId: currentPlayerId,
+		UserStatistics: result
+	});
+}
+
 handlers.player1Wins = function (args)
 {
 	// Upon Player 2 disconnection, server will give player 1 the win and player 2 the loss.
