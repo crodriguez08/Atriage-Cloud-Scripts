@@ -20,6 +20,18 @@ handlers.SavePlayerStats = function (args)
 	});
 }
 
+handlers.SaveSpecificPlayerStats = function (args)
+{
+	var result = server.GetUserStatistics({PlayFabId: args.player_id}).UserStatistics;
+	
+	result.losses += 1;
+	
+	server.UpdateUserStatistics({
+		PlayFabId: args.player_id,
+		UserStatistics: result
+	});
+}
+
 handlers.SavePlayerWinStats = function (args)
 {
 	var result = server.GetUserStatistics({PlayFabId: currentPlayerId}).UserStatistics;
